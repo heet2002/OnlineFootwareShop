@@ -1,0 +1,279 @@
+<%@page import="java.util.Random"%>
+<%@page import="javax.imageio.plugins.tiff.GeoTIFFTagSet"%>
+<%@page import="com.bean.Cart"%>
+<%@page import="com.dao.CartDao"%>
+<%@page import="com.bean.Product"%>
+<%@page import="com.dao.ProductDao"%>
+<%@page import="java.util.List"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<%@ include file="header.jsp"%>
+
+<%
+ 	Random randomGenerator = new Random();
+	int randomInt = randomGenerator.nextInt(1000000);
+ %>
+	
+<!DOCTYPE HTML>
+<html>
+<head>
+</head>
+
+<body>
+<%
+	List<Cart> list=CartDao.getCartByUser(u.getId());
+%>
+	<div class="span12">
+	<%
+if(request.getAttribute("msg")!=null)
+{
+	out.print(request.getAttribute("msg"));	
+}
+	%>
+	
+	<%
+		int net_price=0;
+		if(list.size()>0)
+		{
+	%>
+	
+	<h2>Cart Products</h2>
+	<ul class="thumbnails">
+	<%
+	for(Cart c:list)
+	{
+		net_price=net_price+c.getTotal_price();
+		Product p=ProductDao.getProductPid(c.getPid());
+	%>
+	<li class="span3">
+		<div class="thumbnail">
+			<a href="product_details.jsp"><img src="product_images/<%=p.getProduct_image() %>" alt="" width="400px" height="200px"/></a>
+				<div class="caption">
+				<h5><%=p.getProduct_name() %></h5>
+				<h4><a class="btn btn-primary" href="product_details.jsp?pid=<%=p.getId()%>">Product Details</a>
+				</h4>
+				<form name="chng_qty" method="post" action="change_qty.jsp">
+				<input type="hidden" name="cid" value="<%=c.getCid()%>">
+				<h5>Product Quantity : <input type="number" min="1" max="10" name="product_qty" value="<%=c.getProduct_qty() %>" onchange="this.form.submit();"/></h5>
+				</form>
+				<h5>Product Price : INR <%=c.getProduct_price() %></h5>
+				<h5>Total Price : INR <%=c.getTotal_price() %></h5>
+				<br><br>
+				</div>
+		</div>
+		
+	</li>
+	<%}%>
+	</ul>
+	<%}else{%>
+	   <h4>No Products in Cart</h4>
+	<%}%>
+	
+	
+	<%
+	if(list.size()>0)
+	{
+	%>
+	<form method="post" action="pgRedirect.jsp">
+		<table border="1">
+			<tbody>
+				<tr>
+					<th>S.No</th>
+					<th>Label</th>
+					<th>Value</th>
+				</tr>
+				<tr>
+					<td>1</td>
+					<td><label>ORDER_ID::*</label></td>
+					<td><input id="ORDER_ID" tabindex="1" maxlength="20" size="20"
+						name="ORDER_ID" autocomplete="off"
+						value="ORDS_<%= randomInt %>">
+					</td>
+				</tr>
+				<tr>
+					<td>2</td>
+					<td><label>CUSTID ::*</label></td>
+					<td><input id="CUST_ID" tabindex="2" maxlength="30" size="12" name="CUST_ID" autocomplete="off" value="CUST001"></td>
+				</tr>
+				<tr>
+					<td>3</td>
+					<td><label>INDUSTRY_TYPE_ID ::*</label></td>
+					<td><input id="INDUSTRY_TYPE_ID" tabindex="4" maxlength="12" size="12" name="INDUSTRY_TYPE_ID" autocomplete="off" value="Retail"></td>
+				</tr>
+				<tr>
+					<td>4</td>
+					<td><label>Channel ::*</label></td>
+					<td><input id="CHANNEL_ID" tabindex="4" maxlength="12"
+						size="12" name="CHANNEL_ID" autocomplete="off" value="WEB">
+					</td>
+				</tr>
+				<tr>
+					<td>5</td>
+					<td><label>txnAmount*</label></td>
+					<td><input title="TXN_AMOUNT" tabindex="10"
+						type="text" name="TXN_AMOUNT"
+						value="<%=net_price%>">
+					</td>
+				</tr>
+				<tr>
+					<td></td>
+					<td></td>
+					<td><input value="CheckOut" type="submit"	onclick=""></td>
+				</tr>
+			</tbody>
+		</table>
+		* - Mandatory Fields
+	</form>
+	<%} %>
+	</div>
+
+<br>
+<br>
+<br>
+
+
+	<div class="colorlib-partner">
+		<div class="container">
+			<div class="row">
+				<div class="col partner-col text-center">
+					<img src="images/brand-1.jpg" class="img-fluid"
+						alt="Free html4 bootstrap 4 template">
+				</div>
+				<div class="col partner-col text-center">
+					<img src="images/brand-2.jpg" class="img-fluid"
+						alt="Free html4 bootstrap 4 template">
+				</div>
+				<div class="col partner-col text-center">
+					<img src="images/brand-3.jpg" class="img-fluid"
+						alt="Free html4 bootstrap 4 template">
+				</div>
+				<div class="col partner-col text-center">
+					<img src="images/brand-4.jpg" class="img-fluid"
+						alt="Free html4 bootstrap 4 template">
+				</div>
+				<div class="col partner-col text-center">
+					<img src="images/brand-5.jpg" class="img-fluid"
+						alt="Free html4 bootstrap 4 template">
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<footer id="colorlib-footer" role="contentinfo">
+		<div class="container">
+			<div class="row row-pb-md">
+				<div class="col footer-col colorlib-widget">
+					<h4>About Footwear</h4>
+					<p>Even the all-powerful Pointing has no control about the
+						blind texts it is an almost unorthographic life</p>
+					<p>
+					<ul class="colorlib-social-icons">
+						<li><a href="#"><i class="icon-twitter"></i></a></li>
+						<li><a href="#"><i class="icon-facebook"></i></a></li>
+						<li><a href="#"><i class="icon-linkedin"></i></a></li>
+						<li><a href="#"><i class="icon-dribbble"></i></a></li>
+					</ul>
+					</p>
+				</div>
+				<div class="col footer-col colorlib-widget">
+					<h4>Customer Care</h4>
+					<p>
+					<ul class="colorlib-footer-links">
+						<li><a href="#">Contact</a></li>
+						<li><a href="#">Returns/Exchange</a></li>
+						<li><a href="#">Gift Voucher</a></li>
+						<li><a href="#">Wishlist</a></li>
+						<li><a href="#">Special</a></li>
+						<li><a href="#">Customer Services</a></li>
+						<li><a href="#">Site maps</a></li>
+					</ul>
+					</p>
+				</div>
+				<div class="col footer-col colorlib-widget">
+					<h4>Information</h4>
+					<p>
+					<ul class="colorlib-footer-links">
+						<li><a href="#">About us</a></li>
+						<li><a href="#">Delivery Information</a></li>
+						<li><a href="#">Privacy Policy</a></li>
+						<li><a href="#">Support</a></li>
+						<li><a href="#">Order Tracking</a></li>
+					</ul>
+					</p>
+				</div>
+
+				<div class="col footer-col">
+					<h4>News</h4>
+					<ul class="colorlib-footer-links">
+						<li><a href="blog.jsp">Blog</a></li>
+						<li><a href="#">Press</a></li>
+						<li><a href="#">Exhibitions</a></li>
+					</ul>
+				</div>
+
+				<div class="col footer-col">
+					<h4>Contact Information</h4>
+					<ul class="colorlib-footer-links">
+						<li>291 South 21th Street, <br> Suite 721 New York NY
+							10016
+						</li>
+						<li><a href="tel://1234567920">+ 1235 2355 98</a></li>
+						<li><a href="mailto:info@yoursite.com">info@yoursite.com</a></li>
+						<li><a href="#">yoursite.com</a></li>
+					</ul>
+				</div>
+			</div>
+		</div>
+		<div class="copy">
+			<div class="row">
+				<div class="col-sm-12 text-center">
+					<p>
+						<span>
+							<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+							Copyright &copy;<script>
+								document.write(new Date().getFullYear());
+							</script>
+							All rights reserved | This template is made with <i
+							class="icon-heart" aria-hidden="true"></i> by <a
+							href="https://colorlib.com" target="_blank">Colorlib</a> <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+						</span> <span class="block">Demo Images: <a
+							href="http://unsplash.co/" target="_blank">Unsplash</a> , <a
+							href="http://pexels.com/" target="_blank">Pexels.com</a></span>
+					</p>
+				</div>
+			</div>
+		</div>
+	</footer>
+	</div>
+
+	<div class="gototop js-top">
+		<a href="#" class="js-gotop"><i class="ion-ios-arrow-up"></i></a>
+	</div>
+
+	<!-- jQuery -->
+	<script src="js/jquery.min.js"></script>
+	<!-- popper -->
+	<script src="js/popper.min.js"></script>
+	<!-- bootstrap 4.1 -->
+	<script src="js/bootstrap.min.js"></script>
+	<!-- jQuery easing -->
+	<script src="js/jquery.easing.1.3.js"></script>
+	<!-- Waypoints -->
+	<script src="js/jquery.waypoints.min.js"></script>
+	<!-- Flexslider -->
+	<script src="js/jquery.flexslider-min.js"></script>
+	<!-- Owl carousel -->
+	<script src="js/owl.carousel.min.js"></script>
+	<!-- Magnific Popup -->
+	<script src="js/jquery.magnific-popup.min.js"></script>
+	<script src="js/magnific-popup-options.js"></script>
+	<!-- Date Picker -->
+	<script src="js/bootstrap-datepicker.js"></script>
+	<!-- Stellar Parallax -->
+	<script src="js/jquery.stellar.min.js"></script>
+	<!-- Main -->
+	<script src="js/main.js"></script>
+
+</body>
+</html>
+
