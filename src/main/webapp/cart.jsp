@@ -244,7 +244,9 @@ if(request.getAttribute("msg")!=null)
 			</div>
 		</div>
 	</footer>
-	</div>
+
+	
+	
 
 	<div class="gototop js-top">
 		<a href="#" class="js-gotop"><i class="ion-ios-arrow-up"></i></a>

@@ -20,7 +20,7 @@
 	%>
 	
 	
-	<title>Footwear - Free Bootstrap 4 Template by Colorlib</title>
+	<title>Footwear</title>
    <meta charset="utf-8">
    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
@@ -79,8 +79,6 @@
 						<div class="col-sm-12 text-left menu-1">
 							<ul>
 								<li><a href="index.jsp">Home</a></li>
-								<li><a href="men.jsp">Men</a></li>
-								<li><a href="women.jsp">Women</a></li>
 								<li><a href="about.jsp">About</a></li>
 								<li><a href="contact.jsp">Contact</a></li>
 								

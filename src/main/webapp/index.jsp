@@ -1,3 +1,4 @@
+
 <%@page import="com.dao.ProductDao"%>
 <%@page import="com.bean.Product"%>
 <%@page import="java.util.List"%>
@@ -8,6 +9,7 @@
 <!DOCTYPE HTML>
 <html>
 <head>
+    <title>Online Footwear Shop</title>
 </head>
 
 	<body>

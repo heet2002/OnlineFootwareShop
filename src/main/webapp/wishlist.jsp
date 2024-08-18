@@ -59,7 +59,7 @@ if(request.getAttribute("msg")!=null)
 		else
 		{
 	%>
-	   <h4>No Products in Wishlist</h4>
+	   <h4 style="text-align: center;background: grey;text-color: white;"><I>No Products in Wishlist</h4></I>
 	<%
 		}
 	%>
